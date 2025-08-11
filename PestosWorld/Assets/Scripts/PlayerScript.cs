@@ -25,6 +25,8 @@ public class PlayerScript : MonoBehaviour
 
         if (moveInput.x != 0)
         {
+            animator.SetBool("isMovingFront", false);
+            animator.SetBool("isMovingBack", false);
             animator.SetBool("isMovingX", true);
             if (moveInput.x < 0)
             {
@@ -41,19 +43,27 @@ public class PlayerScript : MonoBehaviour
         }
         else
             animator.SetBool("isMovingX", false);
-        
+
         if (moveInput.y != 0)
         {
-            animator.SetBool("isMovingY", true);
             if (moveInput.y < 0)
             {
                 direction.y = 1;
+                animator.SetBool("isMovingFront", true);
+                animator.SetBool("isMovingBack", false);
             }
-            else 
+            else
+            {
                 direction.y = 0;
+                animator.SetBool("isMovingFront", false);
+                animator.SetBool("isMovingBack", true);
+            }
         }
         else
-            animator.SetBool("isMovingY", false);
+        { 
+            animator.SetBool("isMovingFront", false);
+            animator.SetBool("isMovingBack", false);
+        }
 
         rb.linearVelocity = new Vector2(moveInput.x * speed, moveInput.y * speed);
     }
