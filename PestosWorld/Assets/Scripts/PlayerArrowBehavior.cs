@@ -6,7 +6,7 @@ public class PlayerArrowBehavior : MonoBehaviour
 
     void Start()
     {
-        pesto = GameObject.Find("Pesto");
+        pesto = GameObject.Find("Pesto 1");
         if (pesto == null)
             Debug.LogError("'Pesto' not found");
     }

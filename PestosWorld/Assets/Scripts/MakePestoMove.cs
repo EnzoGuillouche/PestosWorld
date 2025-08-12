@@ -13,8 +13,6 @@ public class MakePestoMove : MonoBehaviour
 
     void Start()
     {
-        PestoDestination = GameObject.Find("Pesto");
-
         click = InputSystem.actions.FindAction("Click");
         click.performed += ctx => OnClick();
     }
@@ -46,17 +44,24 @@ public class MakePestoMove : MonoBehaviour
 
     private void OnClick()
     {
+        // get pesto
+        System.Random rng = new System.Random();
+        PestoDestination = GameObject.Find("Pesto " + rng.Next(1, 3));
+
+        if (PestoDestination == null)
+            return;
+
         mousePos = Mouse.current.position.ReadValue();
         targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
         targetPosition.z = PestoDestination.transform.position.z;
-        CalculateMovementVect();
+        CalculateMovementVect(targetDistance, PestoDestination);
         moving = true;
     }
 
-    private void CalculateMovementVect()
+    private void CalculateMovementVect(Vector2 targetDistance, GameObject Pesto)
     {
-        targetDistance.x = targetPosition.x - PestoDestination.transform.position.x;
-        targetDistance.y = targetPosition.y - PestoDestination.transform.position.y;
+        targetDistance.x = targetPosition.x - Pesto.transform.position.x;
+        targetDistance.y = targetPosition.y - Pesto.transform.position.y;
 
         moveDir = targetDistance.normalized;
     }
