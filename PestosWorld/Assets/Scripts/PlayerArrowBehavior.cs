@@ -2,20 +2,25 @@ using UnityEngine;
 
 public class PlayerArrowBehavior : MonoBehaviour
 {
-    private GameObject pesto;
+    public GameObject pointedObject;
 
     void Start()
     {
-        pesto = GameObject.Find("Pesto 1");
-        if (pesto == null)
-            Debug.LogError("'Pesto' not found");
+        pointedObject = GameObject.Find("Pesto 1");
+        if (pointedObject == null)
+            Debug.LogError("'Pointed Game Object' not found");
     }
 
     void Update()
     {
-        if (pesto != null)
+        if (pointedObject != null)
         {
-            transform.position = pesto.transform.position + new Vector3(0, 0.7f, 0);
+            transform.position = pointedObject.transform.position + new Vector3(0, 0.7f, 0);
         }
+    }
+
+    public void UpdateGameObject(GameObject objectToReplace)
+    {
+        pointedObject = objectToReplace;
     }
 }

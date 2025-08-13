@@ -1,82 +1,90 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
-    private Animator animator;
-    private Rigidbody2D rb;
-    // private InputAction moveAction;
-    private Vector2 moveInput;
-    private readonly float speed = 4f;
-    private Vector2 direction; //  (0 = left, 1 = right), (0 = front, 1 = back)
+    private GameObject PestoDestination;
+    private GameObject playerArrowObject;
+    private Vector2 mousePos;
+    private InputAction click;
+    private Vector3 targetPosition;
+    private Vector2 targetDistance;
+    private Vector2 moveDir;
+    private bool moving = false;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        // moveAction = InputSystem.actions.FindAction("Move");
+        playerArrowObject = GameObject.Find("PlayerArrow");
+        click = InputSystem.actions.FindAction("Click");
+        click.performed += ctx => OnMouseDown();
+    }
+
+    void OnDestroy()
+    {
+        // Unsubscribe to avoid leaks
+        click.performed -= ctx => OnMouseDown();
     }
 
     void Update()
     {
-        rb.linearVelocity = new Vector2(moveInput.x * speed, moveInput.y * speed);
-    }
-
-    private void Flip(int x, int y)
-    {
-        transform.localScale *= new Vector2(x, y);
-    }
-
-    public void Move(Vector2 movement)
-    {
-        moveInput = movement;
-
-        if (moveInput != Vector2.zero)
+        if (moving)
         {
-            if (moveInput.x > 0.5f ^ moveInput.x < -0.5f)
-            {
-                animator.SetBool("isMovingX", true);
-                animator.SetBool("isMovingFront", false);
-                animator.SetBool("isMovingBack", false);
+            MovePesto(moveDir);
 
-                if (moveInput.x < 0)
-                {
-                    if (direction.x != 1)
-                        Flip(-1, 1);
-                    direction.x = 1;
-                }
-                else
-                {
-                    if (direction.x != 0)
-                        Flip(-1, 1);
-                    direction.x = 0;
-                }
+            if (Vector2.Distance(PestoDestination.transform.position, targetPosition) < 0.005f)
+            {
+                moving = false;
+            }
+        }
+    }
+
+    public void MovePesto(Vector2 moveDir)
+    {
+        if (moving)
+        {
+            if (PestoDestination.GetComponent<PestoScript>().collision != true)
+            {
+                PestoDestination.GetComponent<PestoScript>().Move(moveDir);
             }
             else
             {
-                if (moveInput.y != 0)
-                {
-                    animator.SetBool("isMovingX", false);
-
-                    if (moveInput.y < 0)
-                    {
-                        direction.y = 1;
-                        animator.SetBool("isMovingFront", true);
-                        animator.SetBool("isMovingBack", false);
-                    }
-                    else
-                    {
-                        direction.y = 0;
-                        animator.SetBool("isMovingFront", false);
-                        animator.SetBool("isMovingBack", true);
-                    }
-                }
+                moving = false;
             }
         }
-        else
+    }
+
+    private void OnMouseDown()
+    {
+        // get pesto
+        System.Random rng = new System.Random();
+        PestoDestination = GameObject.Find("Pesto " + rng.Next(1, 3));
+
+        mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+        if (PestoDestination == null)
+            return;
+
+        if (hit.collider != null)
         {
-            animator.SetBool("isMovingX", false);
-            animator.SetBool("isMovingFront", false);
-            animator.SetBool("isMovingBack", false);
+            playerArrowObject.GetComponent<PlayerArrowBehavior>().UpdateGameObject(hit.collider.gameObject);
+            if (PestoDestination == hit.collider.gameObject)
+                return;
         }
+
+        mousePos = Mouse.current.position.ReadValue();
+
+        targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
+        targetPosition.z = PestoDestination.transform.position.z;
+        CalculateMovementVect(targetDistance, PestoDestination);
+        moving = true;
+    }
+
+    private void CalculateMovementVect(Vector2 targetDistance, GameObject Pesto)
+    {
+        targetDistance.x = targetPosition.x - Pesto.transform.position.x;
+        targetDistance.y = targetPosition.y - Pesto.transform.position.y;
+
+        moveDir = targetDistance.normalized;
     }
 }
