@@ -8,6 +8,7 @@ public class PestoScript : MonoBehaviour
     private readonly float speed = 4f;
     private Vector2 direction; //  (0 = left, 1 = right), (0 = front, 1 = back)
 
+    public bool moving = false;
     public bool collision = false;
 
     void Start()
@@ -29,12 +30,20 @@ public class PestoScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject == GameObject.Find("PlayerArrow").GetComponent<PlayerArrowBehavior>().pointedObject || other.gameObject.CompareTag("Walls"))
+        if (other.gameObject == GameObject.Find("PlayerArrow").GetComponent<PlayerArrowBehavior>().pointedObject || other.gameObject.layer == LayerMask.NameToLayer("Walls"))
         {
-            Vector2 pushDir = other.contacts[0].normal;
-            transform.position += (Vector3)pushDir * 0.05f; // small push out
+            if (other.gameObject.CompareTag("Destination"))
+            {
+                Destroy(other.gameObject); // Remove hitbox once reached
+            }
+            else if (other.gameObject.CompareTag("Walls"))
+            {
+                Vector2 pushDir = other.contacts[0].normal;
+                transform.position += (Vector3)pushDir * 0.05f; // small push out
+            }
 
             collision = true;
+            moving = false;
             moveInput = Vector2.zero;
             animator.SetBool("isMovingX", false);
             animator.SetBool("isMovingFront", false);

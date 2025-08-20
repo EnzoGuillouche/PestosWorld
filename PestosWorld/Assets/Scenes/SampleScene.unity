@@ -875,6 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00e78089171ef4b2c88fd69df18d6138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destinationHitboxPrefab: {fileID: 1504291612710497305, guid: fd80fd913b6734a279a7e5f832b9bb96, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

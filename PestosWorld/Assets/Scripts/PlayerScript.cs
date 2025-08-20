@@ -9,8 +9,9 @@ public class PlayerScript : MonoBehaviour
     private InputAction click;
     private Vector3 targetPosition;
     private Vector2 targetDistance;
+    public GameObject destinationHitboxPrefab;
+    private GameObject currentHitbox;
     private Vector2 moveDir;
-    private bool moving = false;
 
     void Start()
     {
@@ -27,20 +28,31 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        if (moving)
+        if (PestoDestination != null)
         {
             MovePesto(moveDir);
-
-            if (Vector2.Distance(PestoDestination.transform.position, targetPosition) < 0.005f)
-            {
-                moving = false;
-            }
         }
+    }
+
+    private void SetDestination(Vector2 targetPosition)
+    {
+        // Destroy any old hitboxes
+        if (currentHitbox != null)
+        {
+            Destroy(currentHitbox);
+        }
+
+        // Spawn a new invisible hitbox at clicked position
+        currentHitbox = Instantiate(destinationHitboxPrefab, targetPosition, Quaternion.identity);
+
+        // Calculate move direction
+        moveDir = (targetPosition - (Vector2)transform.position).normalized;
+        PestoDestination.GetComponent<PestoScript>().moving = true;
     }
 
     public void MovePesto(Vector2 moveDir)
     {
-        if (moving)
+        if (PestoDestination.GetComponent<PestoScript>().moving)
         {
             if (PestoDestination.GetComponent<PestoScript>().collision != true)
             {
@@ -48,7 +60,7 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
-                moving = false;
+                PestoDestination.GetComponent<PestoScript>().moving = false;
             }
         }
     }
@@ -57,7 +69,8 @@ public class PlayerScript : MonoBehaviour
     {
         // get pesto
         System.Random rng = new System.Random();
-        PestoDestination = GameObject.Find("Pesto " + rng.Next(1, 3));
+        // PestoDestination = GameObject.Find("Pesto " + rng.Next(1, 3));
+        PestoDestination = GameObject.Find("Pesto 1");
 
         mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -71,13 +84,18 @@ public class PlayerScript : MonoBehaviour
             if (PestoDestination == hit.collider.gameObject)
                 return;
         }
+        else
+        {
+            SetDestination(targetPosition);
+            playerArrowObject.GetComponent<PlayerArrowBehavior>().UpdateGameObject(currentHitbox);
+        }
 
         mousePos = Mouse.current.position.ReadValue();
 
         targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
         targetPosition.z = PestoDestination.transform.position.z;
         CalculateMovementVect(targetDistance, PestoDestination);
-        moving = true;
+        PestoDestination.GetComponent<PestoScript>().moving = true;
     }
 
     private void CalculateMovementVect(Vector2 targetDistance, GameObject Pesto)
