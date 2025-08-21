@@ -6,28 +6,26 @@ public class PlayerScript : MonoBehaviour
     private GameObject PestoDestination;
     private GameObject playerArrowObject;
     private Vector2 mousePos;
-    private InputAction click;
     private Vector3 targetPosition;
     private Vector2 targetDistance;
     public GameObject destinationHitboxPrefab;
     private GameObject currentHitbox;
+    public GameObject pestoSelectedUiPrefab;
+    private GameObject currentPestoUi;
+    private Vector2 pestoSelectedUiPrefabPosition = new Vector2(4.3f, -0.1f);
     private Vector2 moveDir;
 
     void Start()
     {
         playerArrowObject = GameObject.Find("PlayerArrow");
-        click = InputSystem.actions.FindAction("Click");
-        click.performed += ctx => OnMouseDown();
-    }
-
-    void OnDestroy()
-    {
-        // Unsubscribe to avoid leaks
-        click.performed -= ctx => OnMouseDown();
     }
 
     void Update()
     {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Clicked();
+        }
         if (PestoDestination != null)
         {
             MovePesto(moveDir);
@@ -65,7 +63,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    private void Clicked()
     {
         // get pesto
         System.Random rng = new System.Random();
@@ -78,11 +76,27 @@ public class PlayerScript : MonoBehaviour
         if (PestoDestination == null)
             return;
 
+        mousePos = Mouse.current.position.ReadValue();
+        targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
+        targetPosition.z = PestoDestination.transform.position.z;
+
         if (hit.collider != null)
         {
             playerArrowObject.GetComponent<PlayerArrowBehavior>().UpdateGameObject(hit.collider.gameObject);
+
             if (PestoDestination == hit.collider.gameObject)
+            {
+                if (currentPestoUi == null)
+                {
+                    currentPestoUi = Instantiate(pestoSelectedUiPrefab, pestoSelectedUiPrefabPosition, Quaternion.identity);
+
+                }
+                else
+                {
+                    Destroy(currentPestoUi);
+                }
                 return;
+            }
         }
         else
         {
@@ -90,10 +104,6 @@ public class PlayerScript : MonoBehaviour
             playerArrowObject.GetComponent<PlayerArrowBehavior>().UpdateGameObject(currentHitbox);
         }
 
-        mousePos = Mouse.current.position.ReadValue();
-
-        targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
-        targetPosition.z = PestoDestination.transform.position.z;
         CalculateMovementVect(targetDistance, PestoDestination);
         PestoDestination.GetComponent<PestoScript>().moving = true;
     }
