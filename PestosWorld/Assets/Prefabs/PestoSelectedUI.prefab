@@ -599,9 +599,13 @@ PrefabInstance:
       propertyPath: m_Text
       value: 'Confort:'
       objectReference: {fileID: 0}
+    - target: {fileID: 4919082698304436612, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6123618218815664109, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.62
+      value: -1.55
       objectReference: {fileID: 0}
     - target: {fileID: 6123618218815664109, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -851,9 +855,13 @@ PrefabInstance:
       propertyPath: m_Text
       value: "Sociabilit\xE9:"
       objectReference: {fileID: 0}
+    - target: {fileID: 4919082698304436612, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6123618218815664109, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.24
+      value: -1.58
       objectReference: {fileID: 0}
     - target: {fileID: 6123618218815664109, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -965,6 +973,14 @@ PrefabInstance:
       propertyPath: m_Text
       value: "Curiosit\xE9:"
       objectReference: {fileID: 0}
+    - target: {fileID: 4919082698304436612, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6123618218815664109, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.58
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1071,9 +1087,13 @@ PrefabInstance:
       propertyPath: m_Text
       value: "Cr\xE9ativit\xE9:"
       objectReference: {fileID: 0}
+    - target: {fileID: 4919082698304436612, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6123618218815664109, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.41
+      value: -1.57
       objectReference: {fileID: 0}
     - target: {fileID: 6123618218815664109, guid: c3a3af6dffe10456a8a1db2e0c35fda2, type: 3}
       propertyPath: m_AnchoredPosition.y

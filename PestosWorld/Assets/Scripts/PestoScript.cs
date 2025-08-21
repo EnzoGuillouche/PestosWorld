@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public class PestoScript : MonoBehaviour
 {
@@ -10,12 +12,19 @@ public class PestoScript : MonoBehaviour
 
     public bool moving = false;
     public bool collision = false;
+    public Dictionary<string, int> stats = new Dictionary<string, int>();
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
         animator = GetComponent<Animator>();
+
+        // initiate stats dictionary
+        stats.Add("Curiosity", 10);
+        stats.Add("Creativity", 10);
+        stats.Add("Comfort", 10);
+        stats.Add("Socialization", 10);
     }
 
     void Update()

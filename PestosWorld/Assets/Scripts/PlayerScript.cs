@@ -1,5 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System;
+using System.Collections.Generic;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -14,6 +17,7 @@ public class PlayerScript : MonoBehaviour
     private GameObject currentPestoUi;
     private Vector2 pestoSelectedUiPrefabPosition = new Vector2(4.3f, -0.1f);
     private Vector2 moveDir;
+    public Text uiText;
 
     void Start()
     {
@@ -22,13 +26,29 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        displayStats();
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             Clicked();
         }
+
         if (PestoDestination != null)
         {
             MovePesto(moveDir);
+        }
+    }
+
+    private void displayStats()
+    {
+        if (currentPestoUi == null)
+            return;
+
+        foreach (var stat in PestoDestination.GetComponent<PestoScript>().stats)
+        {
+            // Find the text element in the hierarchy
+            Text uiText = currentPestoUi.transform.Find("Stats")?.Find(stat.Key + "Text")?.Find("Text (Legacy)").GetComponent<Text>();
+
+            uiText.text = stat.Key + ": " + stat.Value + "%";
         }
     }
 
