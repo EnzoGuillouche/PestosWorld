@@ -21,10 +21,11 @@ public class PestoScript : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // initiate stats dictionary
-        stats.Add("Curiosity", 10);
-        stats.Add("Creativity", 10);
-        stats.Add("Comfort", 10);
-        stats.Add("Socialization", 10);
+        System.Random rng = new System.Random();
+        stats.Add("Curiosity", rng.Next(1, 16));
+        stats.Add("Creativity", rng.Next(1, 16));
+        stats.Add("Comfort", rng.Next(1, 16));
+        stats.Add("Socialization", rng.Next(1, 16));
     }
 
     void Update()

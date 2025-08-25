@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject destinationHitboxPrefab;
     private GameObject currentHitbox;
     public GameObject pestoSelectedUiPrefab;
+    private GameObject PestoWhomUiIsShown;
     private GameObject currentPestoUi;
     private Vector2 pestoSelectedUiPrefabPosition = new Vector2(4.3f, -0.1f);
     private Vector2 moveDir;
@@ -26,7 +27,7 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        displayStats();
+        DisplayStats();
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             Clicked();
@@ -38,12 +39,12 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private void displayStats()
+    private void DisplayStats()
     {
         if (currentPestoUi == null)
             return;
 
-        foreach (var stat in PestoDestination.GetComponent<PestoScript>().stats)
+        foreach (var stat in PestoWhomUiIsShown.GetComponent<PestoScript>().stats)
         {
             // Find the text element in the hierarchy
             Text uiText = currentPestoUi.transform.Find("Stats")?.Find(stat.Key + "Text")?.Find("Text (Legacy)").GetComponent<Text>();
@@ -87,33 +88,45 @@ public class PlayerScript : MonoBehaviour
     {
         // get pesto
         System.Random rng = new System.Random();
-        // PestoDestination = GameObject.Find("Pesto " + rng.Next(1, 3));
-        PestoDestination = GameObject.Find("Pesto 1");
+
+        PestoDestination = GameObject.Find("Pesto " + rng.Next(1, 3));
+        if (PestoDestination == null)
+            return;
 
         mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
-        if (PestoDestination == null)
-            return;
-
         mousePos = Mouse.current.position.ReadValue();
         targetPosition = Camera.main.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
-        targetPosition.z = PestoDestination.transform.position.z;
 
         if (hit.collider != null)
         {
             playerArrowObject.GetComponent<PlayerArrowBehavior>().UpdateGameObject(hit.collider.gameObject);
 
-            if (PestoDestination == hit.collider.gameObject)
+            if (hit.collider.gameObject.CompareTag("Pesto"))
             {
-                if (currentPestoUi == null)
+                if (PestoWhomUiIsShown == null)
                 {
-                    currentPestoUi = Instantiate(pestoSelectedUiPrefab, pestoSelectedUiPrefabPosition, Quaternion.identity);
+                    PestoWhomUiIsShown = hit.collider.gameObject;
+                }
+                else if (PestoWhomUiIsShown == hit.collider.gameObject)
+                {
+                    if (currentPestoUi == null)
+                    {
+                        currentPestoUi = Instantiate(pestoSelectedUiPrefab, pestoSelectedUiPrefabPosition, Quaternion.identity);
 
+                    }
+                    else
+                    {
+                        Destroy(currentPestoUi);
+                        PestoWhomUiIsShown = null;
+                    }
                 }
                 else
                 {
+                    PestoWhomUiIsShown = hit.collider.gameObject;
                     Destroy(currentPestoUi);
+                    currentPestoUi = Instantiate(pestoSelectedUiPrefab, pestoSelectedUiPrefabPosition, Quaternion.identity);
                 }
                 return;
             }
