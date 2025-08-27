@@ -4,7 +4,7 @@ A game made with Unity where you manage a village of penguins, called Pestos.
 
 ## Game Overview
 
-You begin the game with only 2 Pestos, and you'll need to manage their happiness to make them reproduce. Let's build the larger village possible!
+You begin the game with only 2 Pestos, and you'll need to manage their happiness to make them reproduce. Let's build the largest village possible!
 
 ### Happiness
 
