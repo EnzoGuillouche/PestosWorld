@@ -10,15 +10,15 @@ You begin the game with only 2 Pestos, and you'll need to manage their happiness
 
 Happiness is the way Pestos feel.
 With a low happiness level, they are going to be less efficient in tasks, sleep more, etc.
-On the other hand, with a high happiness level, Pestos are going to be curious, creative, efficient. And then, they will reproduce reaching a certain level of happiness.
+On the other hand, with a high happiness level, Pestos are going to be curious, creative, efficient. And then, they will reproduce reaching a 75% average of happiness.
 
 #### Factors
 
 Happiness in PestosWorld comes from four main factors:
 
-**Curiosity** – the urge to explore and discover new places.
-**Creativity** – the drive to invent, build, and decorate.
-**Comfort** – the sense of safety, warmth, and personal space.
+**Curiosity** – the urge to explore and discover new places.<br>
+**Creativity** – the drive to invent, build, and decorate.<br>
+**Comfort** – the sense of safety, warmth, and personal space.<br>
 **Socialization** – the joy of interacting and forming bonds with others.
 
 The happiness' factors can be increased when Pestos perform actions.
