@@ -46,7 +46,7 @@ public class PestoScript : MonoBehaviour
             {
                 Destroy(other.gameObject); // Remove hitbox once reached
             }
-            else if (other.gameObject.CompareTag("Walls"))
+            else if (other.gameObject.CompareTag("Walls") || other.gameObject.CompareTag("House"))
             {
                 Vector2 pushDir = other.contacts[0].normal;
                 transform.position += (Vector3)pushDir * 0.05f; // small push out

@@ -8,6 +8,7 @@ TagManager:
   - Pesto
   - Decor
   - Destination
+  - House
   layers:
   - Default
   - TransparentFX
