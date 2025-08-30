@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class PestoScript : MonoBehaviour
 {
-    public Animator animator;
+    public GameObject PestoGameObject;
+    private Animator animator;
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private readonly float speed = 4f;
@@ -12,6 +13,8 @@ public class PestoScript : MonoBehaviour
 
     public bool moving = false;
     public bool collision = false;
+    private bool isInHouse = false;
+    float timer = 0.0f;
     public Dictionary<string, int> stats = new Dictionary<string, int>();
 
     void Start()
@@ -22,15 +25,19 @@ public class PestoScript : MonoBehaviour
 
         // initiate stats dictionary
         System.Random rng = new System.Random();
-        stats.Add("Curiosity", rng.Next(1, 16));
-        stats.Add("Creativity", rng.Next(1, 16));
+
+        stats.Add("Curiosity", 75);//rng.Next(1, 16));
+        stats.Add("Creativity", 75);//rng.Next(1, 16));
         stats.Add("Comfort", rng.Next(1, 16));
-        stats.Add("Socialization", rng.Next(1, 16));
+        stats.Add("Socialization", 75); //rng.Next(1, 16));
     }
 
     void Update()
     {
         rb.linearVelocity = new Vector2(moveInput.x * speed, moveInput.y * speed);
+        GetComponent<Renderer>().enabled = !isInHouse;
+
+        ManageHapiness();
     }
 
     private void Flip(int x, int y)
@@ -50,6 +57,9 @@ public class PestoScript : MonoBehaviour
             {
                 Vector2 pushDir = other.contacts[0].normal;
                 transform.position += (Vector3)pushDir * 0.05f; // small push out
+
+                if (other.gameObject.CompareTag("House"))
+                    isInHouse = true;
             }
 
             collision = true;
@@ -71,6 +81,8 @@ public class PestoScript : MonoBehaviour
 
     public void Move(Vector2 movement)
     {
+        if (isInHouse == true)
+            return;
         moveInput = movement;
 
         if (moveInput != Vector2.zero)
@@ -120,6 +132,35 @@ public class PestoScript : MonoBehaviour
             animator.SetBool("isMovingX", false);
             animator.SetBool("isMovingFront", false);
             animator.SetBool("isMovingBack", false);
+        }
+    }
+
+    public void UpdateStat(string stat, int amount)
+    {
+        stats[stat] += amount;
+    }
+
+    private void ManageHapiness()
+    {
+        int statPercentage = (stats["Curiosity"] + stats["Creativity"] + stats["Comfort"] + stats["Socialization"]) / 4;
+
+        if (isInHouse)
+        {
+            if (statPercentage >= 75)
+            {
+                stats["Comfort"] = 33;
+                isInHouse = false;
+                Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
+            }
+
+            timer += Time.deltaTime;
+            int seconds = (int)(timer % 60);
+
+            if (seconds >= 2)
+            {
+                stats["Comfort"] += stats["Comfort"] < 100 ? seconds : 0;
+                timer = 0;
+            }
         }
     }
 }

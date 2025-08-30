@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        PestoDestination = GetRandomPestoObject();
+
         DisplayStats();
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
@@ -66,11 +69,16 @@ public class PlayerScript : MonoBehaviour
 
         // Calculate move direction
         moveDir = (targetPosition - (Vector2)transform.position).normalized;
-        PestoDestination.GetComponent<PestoScript>().moving = true;
+        
+        if (currentPestoUi == null)
+            PestoDestination.GetComponent<PestoScript>().moving = true;
     }
 
     public void MovePesto(Vector2 moveDir)
     {
+        if (currentPestoUi != null)
+            return;
+            
         if (PestoDestination.GetComponent<PestoScript>().moving)
         {
             if (PestoDestination.GetComponent<PestoScript>().collision != true)
@@ -84,12 +92,28 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    private GameObject GetRandomPestoObject()
+    {
+        // Get all GameObjects in the scene
+        GameObject[] allObjects = UnityEngine.Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+        List<GameObject> pestoObjects = allObjects
+            .Where(obj => obj.name.StartsWith("Pesto"))
+            .ToList();
+
+        if (pestoObjects.Count > 0)
+        {
+            System.Random rng = new System.Random();
+            int randomIndex = rng.Next(0, pestoObjects.Count);
+            return pestoObjects[randomIndex];
+        }
+
+        return null;
+    }
+    
     private void Clicked()
     {
         // get pesto
-        System.Random rng = new System.Random();
-
-        PestoDestination = GameObject.Find("Pesto " + rng.Next(1, 3));
         if (PestoDestination == null)
             return;
 
@@ -138,7 +162,9 @@ public class PlayerScript : MonoBehaviour
         }
 
         CalculateMovementVect(targetDistance, PestoDestination);
-        PestoDestination.GetComponent<PestoScript>().moving = true;
+
+        if (currentPestoUi == null)
+            PestoDestination.GetComponent<PestoScript>().moving = true;
     }
 
     private void CalculateMovementVect(Vector2 targetDistance, GameObject Pesto)

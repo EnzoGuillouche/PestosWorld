@@ -581,6 +581,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Pesto
       objectReference: {fileID: 0}
+    - target: {fileID: 3109594271176674511, guid: 24a4de2ac152a4effbd39f4426173260, type: 3}
+      propertyPath: PestoGameObject
+      value: 
+      objectReference: {fileID: 704923598375038845, guid: 24a4de2ac152a4effbd39f4426173260, type: 3}
     - target: {fileID: 3699747816191407315, guid: 24a4de2ac152a4effbd39f4426173260, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.36
@@ -1157,6 +1161,80 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
   m_PrefabInstance: {fileID: 115327684}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &879943884
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 450055224}
+    m_Modifications:
+    - target: {fileID: 7096392609509882873, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_Name
+      value: Walls (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096392609509882873, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+--- !u!4 &879943885 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+  m_PrefabInstance: {fileID: 879943884}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &900321402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1317,6 +1395,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Pesto
       objectReference: {fileID: 0}
+    - target: {fileID: 3109594271176674511, guid: 24a4de2ac152a4effbd39f4426173260, type: 3}
+      propertyPath: PestoGameObject
+      value: 
+      objectReference: {fileID: 704923598375038845, guid: 24a4de2ac152a4effbd39f4426173260, type: 3}
     - target: {fileID: 3699747816191407315, guid: 24a4de2ac152a4effbd39f4426173260, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.36
@@ -1373,6 +1455,10 @@ PrefabInstance:
     - target: {fileID: 7096392609509882873, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
       propertyPath: m_Name
       value: Wall (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096392609509882873, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     - target: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
       propertyPath: m_LocalScale.x
@@ -2705,7 +2791,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3999061901514777721, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
@@ -2729,6 +2816,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
       insertIndex: -1
       addedObject: {fileID: 425184623}
+    - targetCorrespondingSourceObject: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 879943885}
     - targetCorrespondingSourceObject: {fileID: 8225777951739135889, guid: 06e378c14ed3c4bfd825eef0b516ed12, type: 3}
       insertIndex: -1
       addedObject: {fileID: 874073328}
