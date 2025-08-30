@@ -26,10 +26,10 @@ public class PestoScript : MonoBehaviour
         // initiate stats dictionary
         System.Random rng = new System.Random();
 
-        stats.Add("Curiosity", 75);//rng.Next(20, 41));
-        stats.Add("Creativity", 75);//rng.Next(20, 41));
-        stats.Add("Comfort", rng.Next(20, 41));
-        stats.Add("Socialization", 75); //rng.Next(20, 41));
+        stats.Add("Curiosité", 75);//rng.Next(20, 41));
+        stats.Add("Créativité", 75);//rng.Next(20, 41));
+        stats.Add("Confort", rng.Next(20, 41));
+        stats.Add("Sociabilité", 75); //rng.Next(20, 41));
     }
 
     void Update()
@@ -145,7 +145,7 @@ public class PestoScript : MonoBehaviour
 
     private void ManageHapiness()
     {
-        int statPercentage = (stats["Curiosity"] + stats["Creativity"] + stats["Comfort"] + stats["Socialization"]) / 4;
+        int statPercentage = (stats["Curiosité"] + stats["Créativité"] + stats["Confort"] + stats["Sociabilité"]) / 4;
 
         if (isInHouse)
         {

@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd02fdb76a56d4a4d82147215ce98b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  PestoGameObject: {fileID: 704923598375038845}
   moving: 0
   collision: 0
+  isInHouse: 0
