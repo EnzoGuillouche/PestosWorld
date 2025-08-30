@@ -13,7 +13,7 @@ public class PestoScript : MonoBehaviour
 
     public bool moving = false;
     public bool collision = false;
-    private bool isInHouse = false;
+    public bool isInHouse = false;
     float timer = 0.0f;
     public Dictionary<string, int> stats = new Dictionary<string, int>();
 
@@ -26,10 +26,10 @@ public class PestoScript : MonoBehaviour
         // initiate stats dictionary
         System.Random rng = new System.Random();
 
-        stats.Add("Curiosity", 75);//rng.Next(1, 16));
-        stats.Add("Creativity", 75);//rng.Next(1, 16));
-        stats.Add("Comfort", rng.Next(1, 16));
-        stats.Add("Socialization", 75); //rng.Next(1, 16));
+        stats.Add("Curiosity", 75);//rng.Next(20, 41));
+        stats.Add("Creativity", 75);//rng.Next(20, 41));
+        stats.Add("Comfort", rng.Next(20, 41));
+        stats.Add("Socialization", 75); //rng.Next(20, 41));
     }
 
     void Update()
@@ -40,7 +40,7 @@ public class PestoScript : MonoBehaviour
         ManageHapiness();
     }
 
-    private void Flip(int x, int y)
+    public void Flip(int x, int y)
     {
         transform.localScale *= new Vector2(x, y);
     }
@@ -58,8 +58,11 @@ public class PestoScript : MonoBehaviour
                 Vector2 pushDir = other.contacts[0].normal;
                 transform.position += (Vector3)pushDir * 0.05f; // small push out
 
-                if (other.gameObject.CompareTag("House"))
+                if (other.gameObject == GameObject.Find("PlayerArrow").GetComponent<PlayerArrowBehavior>().pointedObject && other.gameObject.CompareTag("House"))
+                {
                     isInHouse = true;
+                    GameObject.Find("Player").GetComponent<PlayerScript>().ShowPestoUI(gameObject, true);
+                }
             }
 
             collision = true;
@@ -148,9 +151,12 @@ public class PestoScript : MonoBehaviour
         {
             if (statPercentage >= 75)
             {
+                GameObject.Find("Player").GetComponent<PlayerScript>().ShowPestoUI(null, false);
                 stats["Comfort"] = 33;
                 isInHouse = false;
-                Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
+
+                GameObject go = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
+                go.GetComponent<PestoScript>().Flip(-1, 1);
             }
 
             timer += Time.deltaTime;

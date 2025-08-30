@@ -17,7 +17,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject pestoSelectedUiPrefab;
     private GameObject PestoWhomUiIsShown;
     private GameObject currentPestoUi;
-    private Vector2 pestoSelectedUiPrefabPosition = new Vector2(4.3f, -0.1f);
+    private Vector2 pestoSelectedUiPrefabPosition = new Vector2(4.0f, -0.1f);
     private Vector2 moveDir;
     public Text uiText;
 
@@ -44,7 +44,7 @@ public class PlayerScript : MonoBehaviour
 
     private void DisplayStats()
     {
-        if (currentPestoUi == null)
+        if (PestoWhomUiIsShown == null || currentPestoUi == null)
             return;
 
         foreach (var stat in PestoWhomUiIsShown.GetComponent<PestoScript>().stats)
@@ -110,6 +110,15 @@ public class PlayerScript : MonoBehaviour
 
         return null;
     }
+
+    public void ShowPestoUI(GameObject pesto, bool show)
+    {
+        PestoWhomUiIsShown = pesto;
+        if (show)
+            currentPestoUi = Instantiate(pestoSelectedUiPrefab, pestoSelectedUiPrefabPosition, Quaternion.identity);
+        else
+            Destroy(currentPestoUi);
+    }
     
     private void Clicked()
     {
@@ -131,7 +140,7 @@ public class PlayerScript : MonoBehaviour
             {
                 if (PestoWhomUiIsShown == null)
                 {
-                    PestoWhomUiIsShown = hit.collider.gameObject;
+                    ShowPestoUI(hit.collider.gameObject, false);
                 }
                 else if (PestoWhomUiIsShown == hit.collider.gameObject)
                 {
@@ -153,6 +162,24 @@ public class PlayerScript : MonoBehaviour
                     currentPestoUi = Instantiate(pestoSelectedUiPrefab, pestoSelectedUiPrefabPosition, Quaternion.identity);
                 }
                 return;
+            }
+            else if (hit.collider.gameObject.CompareTag("House"))
+            {
+                if (PestoWhomUiIsShown != null)
+                {
+                    if (PestoWhomUiIsShown.GetComponent<PestoScript>().isInHouse)
+                    {
+                        if (currentPestoUi != null)
+                        {
+                            Destroy(currentPestoUi);
+                        }
+                        else
+                        {
+                            currentPestoUi = Instantiate(pestoSelectedUiPrefab, pestoSelectedUiPrefabPosition, Quaternion.identity);
+                        }
+                        return;
+                    }
+                }  
             }
         }
         else
